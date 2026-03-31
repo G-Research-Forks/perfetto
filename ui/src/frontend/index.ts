@@ -29,7 +29,6 @@ import {UiMain} from './ui_main';
 import {registerDebugGlobals} from './debug';
 import {maybeShowErrorDialog} from './error_dialog';
 import {installFileDropHandler} from './file_drop_handler';
-import {tryLoadIsInternalUserScript} from './is_internal_user_script_loader';
 import {HomePage} from './home_page';
 import {postMessageHandler} from './post_message_handler';
 import {Route, Router} from '../core/router';
@@ -327,9 +326,8 @@ function main() {
   // Load the script to detect if this is a Googler (see comments on globals.ts)
   // and initialize GA after that (or after a timeout if something goes wrong).
   const app = AppImpl.instance;
-  tryLoadIsInternalUserScript(app).then(() => {
-    app.analytics.initialize(app.isInternalUser);
-  });
+  app.isInternalUser = false;
+  app.analytics.initialize(app.isInternalUser);
 
   // Route errors to both the UI bugreport dialog and Analytics (if enabled).
   addErrorHandler(maybeShowErrorDialog);
