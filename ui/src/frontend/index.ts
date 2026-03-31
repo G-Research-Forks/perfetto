@@ -250,7 +250,7 @@ function main() {
       enabled.
     `,
     schema: z.boolean(),
-    defaultValue: true,
+    defaultValue: false,
     requiresReload: true,
   });
 
